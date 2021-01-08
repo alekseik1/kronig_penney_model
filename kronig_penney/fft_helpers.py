@@ -15,9 +15,7 @@ class FourierTransformer:
         assert len(self.x_grid) > 1
         self._delta = delta
         unsorted_grid = np.fft.rfftfreq(self.x_grid.size, d=delta)
-        # self._freq_order = np.argsort(unsorted_grid)
-        self._freq_order = np.arange(unsorted_grid.size)
-        self.freq_grid = unsorted_grid#[self._freq_order]
+        self.freq_grid = unsorted_grid
         return self
 
     def add_potential(self, potential_func, **kwargs) -> 'FourierTransformer':
