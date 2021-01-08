@@ -20,6 +20,7 @@ class FourierTransformer:
         return self
 
     def add_potential(self, potential_func, **kwargs) -> 'FourierTransformer':
+        self.kwargs = kwargs
         self.potential_function_direct = lambda x: potential_func(x, **kwargs)
         return self
 
