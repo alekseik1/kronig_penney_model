@@ -14,8 +14,7 @@ class FourierTransformer:
         delta = self.x_grid[1] - self.x_grid[0]
         assert len(self.x_grid) > 1
         self._delta = delta
-        unsorted_grid = np.fft.rfftfreq(self.x_grid.size, d=delta)
-        self.freq_grid = unsorted_grid
+        self.freq_grid = np.fft.rfftfreq(self.x_grid.size, d=delta)
         return self
 
     def add_potential(self, potential_func, **kwargs) -> 'FourierTransformer':

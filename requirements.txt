@@ -2,3 +2,4 @@ hypothesis
 numpy
 matplotlib
 pytest
+seaborn
