@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from typing import List
 from kronig_penney.fft_helpers import FourierTransformer
+from kronig_penney.examples import square_well_potential as pot_direct, square_well_analytical_ft as analytical_ft
 
 V0 = -10
 a = 1
@@ -9,13 +10,6 @@ b = 10
 kwargs = {'V0': V0, 'a': a, 'b': b}
 
 
-def analytical_ft(k_range):
-    return (k_range != 0).astype(np.float) * V0 / (np.pi * k_range) * np.sin(np.pi * k_range * a) + \
-            (k_range == 0).astype(np.float) * V0 * a
-
-
-def pot_direct(x):
-    return V0 * np.ones_like(x) * ((x % (b/2) < a/2).astype(np.float) + (b/2 - a/2 < x % (b/2)).astype(np.float))
 
 
 if __name__ == '__main__':
@@ -24,11 +18,11 @@ if __name__ == '__main__':
 
     tr.\
         add_grid(b/2, 10**5).\
-        add_potential(pot_direct)
+        add_potential(pot_direct, **kwargs)
 
     freq = tr.freq_grid
     coeffs = np.real(tr.freq_coeffs)
-    anal = analytical_ft(tr.freq_grid)
+    anal = analytical_ft(tr.freq_grid, **kwargs)
     # Fourier
     for ax in axes[:2]:
         ax.plot(freq, coeffs, label='numeric', alpha=0.3)
@@ -49,7 +43,7 @@ if __name__ == '__main__':
     axes[2].grid()
     # Direct space
     axes[-1].set_title('Potential in direct space')
-    axes[-1].plot(tr.x_grid, pot_direct(tr.x_grid))
+    axes[-1].plot(tr.x_grid, pot_direct(tr.x_grid, **kwargs))
     axes[-1].grid()
 
     fig.show()
