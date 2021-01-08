@@ -25,3 +25,6 @@ class FourierTransformer:
     @property
     def freq_coeffs(self) -> np.ndarray:
         return np.fft.rfft(self.potential_function_direct(self.x_grid)) * self._delta
+
+    def convert_back(self, values: np.ndarray) -> np.ndarray:
+        return np.fft.irfft(values / self._delta)
