@@ -12,7 +12,7 @@ class FourierTransformer:
         :param n_dots:
         :return:
         """
-        self.x_grid = np.linspace(0, period, n_dots)
+        self.x_grid = np.linspace(0, period, n_dots, endpoint=False)
         delta = self.x_grid[1] - self.x_grid[0]
         assert len(self.x_grid) > 1
         self._delta = delta
