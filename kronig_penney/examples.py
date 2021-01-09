@@ -26,6 +26,6 @@ def square_well_analytical_ft(k_range: np.ndarray, V0: float, a: float, b: float
     :param b: not used but accepted for inner compatibilities
     :return: array of amplitudes for corresponding frequencies
     """
-    tmp = V0 / (np.pi * k_range) * np.sin(np.pi * k_range * a)
-    np.nan_to_num(tmp, copy=False, nan=V0*a)
+    tmp = V0 / (b * np.pi * k_range) * np.sin(np.pi * k_range * a)
+    np.nan_to_num(tmp, copy=False, nan=V0 * a / b)
     return tmp
