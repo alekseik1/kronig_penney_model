@@ -1,4 +1,5 @@
 import numpy as np
+from kronig_penney.examples import square_well_analytical_ft as aft
 
 
 class FourierTransformer:
@@ -17,6 +18,9 @@ class FourierTransformer:
         assert len(self.x_grid) > 1
         self._delta = delta
         self.freq_grid = np.fft.rfftfreq(self.x_grid.size, d=delta)
+        self._freq_delta = self.freq_grid[1] - self.freq_grid[0]
+        self.freq_grid_negative = -self.freq_grid[:0:-1]
+        self.full_freq_grid = np.concatenate((self.freq_grid_negative, self.freq_grid))
         return self
 
     def add_potential(self, potential_func, **kwargs) -> 'FourierTransformer':
@@ -32,3 +36,19 @@ class FourierTransformer:
 
     def convert_back(self, values: np.ndarray) -> np.ndarray:
         return np.fft.irfft(values / self._delta, self.x_grid.size)
+
+    def get_potential_matrix(self) -> np.ndarray:
+        result = np.zeros((self.full_freq_grid.size, self.full_freq_grid.size))
+        # Need to double k-matrix for building V-matrix
+        extended_grid = np.arange(2*min(self.full_freq_grid), 2*max(self.full_freq_grid) + self._freq_delta, self._freq_delta)
+        an = aft(extended_grid, **self.kwargs)
+        for i in range(result.shape[0]):
+            for j in range(result.shape[1]):
+                result[i][j] = an[len(extended_grid)//2 + i - j]
+        return result
+
+    def get_kinetic_matrix(self) -> np.ndarray:
+        return np.diag([0.5 * (2 * np.pi * i)**2 for i in self.full_freq_grid])
+
+    def get_hamilton_matrix(self) -> np.ndarray:
+        return self.get_kinetic_matrix() + self.get_potential_matrix()
