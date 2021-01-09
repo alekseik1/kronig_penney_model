@@ -31,7 +31,7 @@ if __name__ == '__main__':
         plt.xlabel('Number of energy level (not sorted)')
         plt.ylabel('Energy value (dimension unclear)')
         plt.grid()
-        plt.title(f'Minimal energy is {np.min(energies)}')
+        plt.title(f'Number of dots: {n_dots} | Minimal energy is {np.min(energies)}')
         plt.savefig(f'energies_with_{n_dots}_dots.pdf')
         plt.show()
         plt.close()
