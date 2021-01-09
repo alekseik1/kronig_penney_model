@@ -1,8 +1,8 @@
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-from kronig_penney.fft_helpers import FourierTransformer
-from kronig_penney.examples import square_well_potential as swp
+from fft_helpers import FourierTransformer
+from examples import square_well_potential as swp
 
 
 def getPlaneWave(x, a, kvec_j):

@@ -1,5 +1,5 @@
 import numpy as np
-from kronig_penney.examples import square_well_analytical_ft as aft
+from examples import square_well_analytical_ft as aft
 
 
 class FourierTransformer:
