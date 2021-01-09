@@ -27,8 +27,14 @@ if __name__ == '__main__':
 
         # fig, axes = plt.subplots(3, 1)
         energies, coeffs = np.linalg.eig(tr.get_hamilton_matrix())
-        plt.scatter(range(len(energies)), energies)
+        plt.scatter(range(len(energies)), energies, s=2, alpha=0.6)
+        plt.xlabel('Number of energy level (not sorted)')
+        plt.ylabel('Energy value (dimension unclear)')
+        plt.grid()
+        plt.title(f'Minimal energy is {np.min(energies)}')
+        plt.savefig(f'energies_with_{n_dots}_dots.pdf')
         plt.show()
+        plt.close()
         continue
         coeffs = coeffs
         elow = np.sort(energies, axis=None)[:3]
